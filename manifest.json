@@ -1,0 +1,97 @@
+{
+  "manifest_version": 3,
+  "name": "AI Resource Directory",
+  "version": "1.2.0",
+  "description": "A comprehensive directory of AI resource platforms and interactive AI models with enhanced features and accessibility",
+  "permissions": [
+    "storage",
+    "theme",
+    "alarms",
+    "offline",
+    "notifications",
+    "bookmarks",
+    "tabs",
+    "scripting",
+    "contextMenus"
+  ],
+  "host_permissions": [
+    "*://*.airesourcedirectory.com/*",
+    "*://*.openai.com/*",
+    "*://*.anthropic.com/*",
+    "*://*.huggingface.co/*"
+  ],
+  "optional_permissions": [
+    "identity",
+    "downloads"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/icon16.png",
+      "32": "images/icon32.png",
+      "48": "images/icon48.png",
+      "128": "images/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "images/icon16.png",
+    "32": "images/icon32.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+A",
+        "mac": "Command+Shift+A",
+        "linux": "Ctrl+Shift+A"
+      },
+      "description": "Open AI Resource Directory"
+    },
+    "toggle_favorites": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+F",
+        "mac": "Command+Shift+F",
+        "linux": "Ctrl+Shift+F"
+      },
+      "description": "Toggle Favorites View"
+    },
+    "quick_search": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Space",
+        "mac": "Command+Shift+Space",
+        "linux": "Ctrl+Shift+Space"
+      },
+      "description": "Quick Search AI Tools"
+    },
+    "compare_tools": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+C",
+        "mac": "Command+Shift+C",
+        "linux": "Ctrl+Shift+C"
+      },
+      "description": "Compare Selected AI Tools"
+    }
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  },
+  "background": {
+    "service_worker": "serviceWorker.js",
+    "type": "module"
+  },
+  "web_accessible_resources": [{
+    "resources": [
+      "images/*",
+      "offline.html",
+      "*.js",
+      "*.css"
+    ],
+    "matches": ["<all_urls>"]
+  }],
+  "author": "AI Resource Directory Team",
+  "homepage_url": "https://github.com/yourusername/ai-resource-directory",
+  "minimum_chrome_version": "88",
+  "offline_enabled": true,
+  "options_page": "options.html"
+}

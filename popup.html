@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A comprehensive directory of AI resource platforms and interactive AI models">
+    <title>AI Resource Directory</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="loadingSpinner" class="loading-spinner" aria-label="Loading content"></div>
+
+    <header role="banner">
+        <h1>AI Resource Directory</h1>
+        <div class="controls" role="toolbar" aria-label="Page controls">
+            <button id="darkModeToggle" 
+                    aria-label="Toggle dark mode" 
+                    title="Toggle dark mode">🌓</button>
+            <button id="showFavorites" 
+                    aria-label="Show favorites" 
+                    title="Show favorites">☆</button>
+        </div>
+    </header>
+    
+    <div class="search-container" role="search">
+        <input type="text" 
+               id="search" 
+               placeholder="Search resources..." 
+               aria-label="Search resources">
+        <select id="categoryFilter" 
+                aria-label="Filter by category">
+            <option value="all">All Categories</option>
+            <option value="directories">Directories</option>
+            <option value="models">Models</option>
+            <option value="development">Development</option>
+            <option value="learning">Learning</option>
+        </select>
+    </div>
+
+    <main id="resources" role="main">
+        <section id="directories" aria-labelledby="directories-heading">
+            <h2 id="directories-heading">AI Tool Directories</h2>
+            <ul>
+                <li>
+                    <article class="resource-card">
+                        <div class="resource-header">
+                            <a href="https://theresanaiforthat.com" 
+                               target="_blank" 
+                               rel="noopener noreferrer">
+                                There's An AI For That
+                            </a>
+                            <button class="favorite-btn" 
+                                    data-id="theresanaiforthat" 
+                                    aria-label="Add to favorites">☆</button>
+                        </div>
+                        <p class="description">Comprehensive directory of AI tools categorized by use case</p>
+                        <div class="tags" role="list" aria-label="Resource tags">
+                            <span class="tag" role="listitem">Directory</span>
+                            <span class="tag" role="listitem">Free</span>
+                        </div>
+                    </article>
+                </li>
+                <li>
+                    <article class="resource-card">
+                        <div class="resource-header">
+                            <a href="https://futurepedia.io" 
+                               target="_blank" 
+                               rel="noopener noreferrer">
+                                Futurepedia
+                            </a>
+                            <button class="favorite-btn" 
+                                    data-id="futurepedia" 
+                                    aria-label="Add to favorites">☆</button>
+                        </div>
+                        <p class="description">Daily updated AI tools directory with reviews</p>
+                        <div class="tags" role="list" aria-label="Resource tags">
+                            <span class="tag" role="listitem">Directory</span>
+                            <span class="tag" role="listitem">Reviews</span>
+                        </div>
+                    </article>
+                </li>
+            </ul>
+        </section>
+
+        <section id="models" aria-labelledby="models-heading">
+            <h2 id="models-heading">Interactive AI Models</h2>
+            <ul>
+                <li>
+                    <article class="resource-card">
+                        <div class="resource-header">
+                            <a href="https://chat.openai.com" 
+                               target="_blank" 
+                               rel="noopener noreferrer">
+                                ChatGPT
+                            </a>
+                            <button class="favorite-btn" 
+                                    data-id="chatgpt" 
+                                    aria-label="Add to favorites">☆</button>
+                        </div>
+                        <p class="description">OpenAI's conversational AI model</p>
+                        <div class="tags" role="list" aria-label="Resource tags">
+                            <span class="tag" role="listitem">Chat</span>
+                            <span class="tag" role="listitem">Free/Premium</span>
+                        </div>
+                    </article>
+                </li>
+                <li>
+                    <article class="resource-card">
+                        <div class="resource-header">
+                            <a href="https://www.anthropic.com/claude" 
+                               target="_blank" 
+                               rel="noopener noreferrer">
+                                Claude
+                            </a>
+                            <button class="favorite-btn" 
+                                    data-id="claude" 
+                                    aria-label="Add to favorites">☆</button>
+                        </div>
+                        <p class="description">Anthropic's advanced AI assistant</p>
+                        <div class="tags" role="list" aria-label="Resource tags">
+                            <span class="tag" role="listitem">Chat</span>
+                            <span class="tag" role="listitem">Premium</span>
+                        </div>
+                    </article>
+                </li>
+            </ul>
+        </section>
+
+        <section id="development" aria-labelledby="development-heading">
+            <h2 id="development-heading">AI Development Resources</h2>
+            <ul>
+                <li>
+                    <article class="resource-card">
+                        <div class="resource-header">
+                            <a href="https://huggingface.co" 
+                               target="_blank" 
+                               rel="noopener noreferrer">
+                                Hugging Face
+                            </a>
+                            <button class="favorite-btn" 
+                                    data-id="huggingface" 
+                                    aria-label="Add to favorites">☆</button>
+                        </div>
+                        <p class="description">Open-source AI model hub and development tools</p>
+                        <div class="tags" role="list" aria-label="Resource tags">
+                            <span class="tag" role="listitem">Development</span>
+                            <span class="tag" role="listitem">Open Source</span>
+                        </div>
+                    </article>
+                </li>
+                <li>
+                    <article class="resource-card">
+                        <div class="resource-header">
+                            <a href="https://paperswithcode.com" 
+                               target="_blank" 
+                               rel="noopener noreferrer">
+                                Papers with Code
+                            </a>
+                            <button class="favorite-btn" 
+                                    data-id="paperswithcode" 
+                                    aria-label="Add to favorites">☆</button>
+                        </div>
+                        <p class="description">Machine learning papers with implemented code</p>
+                        <div class="tags" role="list" aria-label="Resource tags">
+                            <span class="tag" role="listitem">Research</span>
+                            <span class="tag" role="listitem">Code</span>
+                        </div>
+                    </article>
+                </li>
+            </ul>
+        </section>
+
+        <section id="learning" aria-labelledby="learning-heading">
+            <h2 id="learning-heading">AI Learning & Community</h2>
+            <ul>
+                <li>
+                    <article class="resource-card">
+                        <div class="resource-header">
+                            <a href="https://www.fast.ai" 
+                               target="_blank" 
+                               rel="noopener noreferrer">
+                                Fast.ai
+                            </a>
+                            <button class="favorite-btn" 
+                                    data-id="fastai" 
+                                    aria-label="Add to favorites">☆</button>
+                        </div>
+                        <p class="description">Free courses on deep learning and AI</p>
+                        <div class="tags" role="list" aria-label="Resource tags">
+                            <span class="tag" role="listitem">Education</span>
+                            <span class="tag" role="listitem">Free</span>
+                        </div>
+                    </article>
+                </li>
+                <li>
+                    <article class="resource-card">
+                        <div class="resource-header">
+                            <a href="https://www.deeplearning.ai" 
+                               target="_blank" 
+                               rel="noopener noreferrer">
+                                DeepLearning.AI
+                            </a>
+                            <button class="favorite-btn" 
+                                    data-id="deeplearningai" 
+                                    aria-label="Add to favorites">☆</button>
+                        </div>
+                        <p class="description">AI courses and specializations</p>
+                        <div class="tags" role="list" aria-label="Resource tags">
+                            <span class="tag" role="listitem">Education</span>
+                            <span class="tag" role="listitem">Paid</span>
+                        </div>
+                    </article>
+                </li>
+            </ul>
+        </section>
+    </main>
+
+    <aside id="lastVisited" class="hidden" role="complementary" aria-labelledby="last-visited-heading">
+        <h2 id="last-visited-heading">Recently Visited</h2>
+        <ul id="lastVisitedList"></ul>
+    </aside>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
