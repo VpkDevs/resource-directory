@@ -3,24 +3,41 @@ import { storageUtils, performanceUtils, domUtils, stringUtils } from './utils.j
 import { toastManager } from './toast.js';
 import { AppState, Resource, LastVisitedItem } from './types.ts';
 
+/**
+ * StateManager class manages the application state, including favorites,
+ * dark mode, last visited items, and loading state.
+ */
 class StateManager {
     constructor() {
-        this.favorites = new Set();
-        this.darkMode = false;
-        this.lastVisitedItems = [];
-        this.isLoading = true;
-        this.settings = null;
-        this._observers = new Set();
+        this.favorites = new Set(); // Stores favorite resources
+        this.darkMode = false; // Indicates if dark mode is enabled
+        this.lastVisitedItems = []; // Stores last visited items
+        this.isLoading = true; // Indicates if the application is loading
+        this.settings = null; // Stores user settings
+        this._observers = new Set(); // Observers for state changes
     }
 
+    /**
+     * Adds an observer to the state manager.
+     * @param {Object} observer - The observer to add.
+     */
     addObserver(observer) {
         this._observers.add(observer);
     }
 
+    /**
+     * Removes an observer from the state manager.
+     * @param {Object} observer - The observer to remove.
+     */
     removeObserver(observer) {
         this._observers.delete(observer);
     }
 
+    /**
+     * Notifies all observers of a state change.
+     * @param {string} event - The event type.
+     * @param {Object} data - The data associated with the event.
+     */
     notifyObservers(event, data) {
         this._observers.forEach(observer => {
             if (observer.onStateChange) {
@@ -29,6 +46,10 @@ class StateManager {
         });
     }
 
+    /**
+     * Initializes the state manager by loading settings and data.
+     * @returns {Promise<boolean>} - Returns true if initialization is successful.
+     */
     async initialize() {
         try {
             // Load settings first as they affect other initializations
@@ -60,6 +81,9 @@ class StateManager {
         }
     }
 
+    /**
+     * Saves the current favorites to storage.
+     */
     async saveFavorites() {
         try {
             const favoritesArray = Array.from(this.favorites);
@@ -73,6 +97,9 @@ class StateManager {
         }
     }
 
+    /**
+     * Saves the current theme preference to storage.
+     */
     async saveTheme() {
         try {
             await storageUtils.set(CONFIG.STORAGE_KEYS.DARK_MODE, this.darkMode);
@@ -84,6 +111,9 @@ class StateManager {
         }
     }
 
+    /**
+     * Saves the last visited items to storage.
+     */
     async saveLastVisited() {
         try {
             await storageUtils.set(CONFIG.STORAGE_KEYS.LAST_VISITED, this.lastVisitedItems);
@@ -95,19 +125,25 @@ class StateManager {
         }
     }
 
+    /**
+     * Cleans up observers when no longer needed.
+     */
     cleanup() {
         this._observers.clear();
     }
 }
 
+/**
+ * UIManager class handles user interface elements and interactions.
+ */
 class UIManager {
     constructor(stateManager) {
-        this.state = stateManager;
-        this.elements = {};
-        this.eventListeners = new Map();
-        this.virtualScroller = null;
-        this.intersectionObserver = null;
-        this.debouncedFilter = null;
+        this.state = stateManager; // Reference to the state manager
+        this.elements = {}; // Cached DOM elements
+        this.eventListeners = new Map(); // Event listeners for cleanup
+        this.virtualScroller = null; // Virtual scroller for performance
+        this.intersectionObserver = null; // Intersection observer for lazy loading
+        this.debouncedFilter = null; // Debounced filter function
         
         // Initialize components
         this.initializeElements();
@@ -119,6 +155,9 @@ class UIManager {
         this.state.addObserver(this);
     }
 
+    /**
+     * Initializes DOM elements by caching them for later use.
+     */
     initializeElements() {
         // Cache DOM queries
         const elements = {
@@ -145,6 +184,9 @@ class UIManager {
         this.elements = elements;
     }
 
+    /**
+     * Sets up event listeners for user interactions.
+     */
     setupEventListeners() {
         // Create debounced filter function
         this.debouncedFilter = performanceUtils.debounce(
@@ -175,6 +217,9 @@ class UIManager {
         this.setupMessageListener();
     }
 
+    /**
+     * Sets up event delegation for dynamic elements.
+     */
     setupEventDelegation() {
         // Event delegation for resource cards
         const delegatedHandler = (event) => {
@@ -197,6 +242,9 @@ class UIManager {
         });
     }
 
+    /**
+     * Sets up a message listener for settings updates.
+     */
     setupMessageListener() {
         const messageHandler = (message) => {
             if (message.type === 'SETTINGS_UPDATED') {
@@ -207,6 +255,9 @@ class UIManager {
         this.eventListeners.set('chrome.runtime', messageHandler);
     }
 
+    /**
+     * Sets up an intersection observer for lazy loading resource cards.
+     */
     setupIntersectionObserver() {
         this.intersectionObserver = new IntersectionObserver(
             (entries) => {
@@ -231,6 +282,9 @@ class UIManager {
         });
     }
 
+    /**
+     * Sets up a virtual scroller for performance optimization.
+     */
     setupVirtualScroller() {
         if (this.elements.lastVisitedList) {
             this.virtualScroller = {
@@ -273,6 +327,11 @@ class UIManager {
         }
     }
 
+    /**
+     * Handles state changes from the state manager.
+     * @param {string} event - The event type.
+     * @param {Object} data - The data associated with the event.
+     */
     onStateChange(event, data) {
         switch (event) {
             case 'initialized':
@@ -294,12 +353,18 @@ class UIManager {
         }
     }
 
+    /**
+     * Toggles the theme between dark and light mode.
+     */
     async toggleTheme() {
         this.state.darkMode = !this.state.darkMode;
         this.updateTheme();
         await this.state.saveTheme();
     }
 
+    /**
+     * Updates the theme based on the current state.
+     */
     updateTheme() {
         const isDark = this.state.darkMode;
         document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
@@ -313,6 +378,10 @@ class UIManager {
         }
     }
 
+    /**
+     * Toggles a favorite item based on user interaction.
+     * @param {Event} event - The click event.
+     */
     async toggleFavoriteItem(event) {
         try {
             const btn = event.target;
@@ -347,6 +416,9 @@ class UIManager {
         }
     }
 
+    /**
+     * Updates the favorite buttons based on the current state.
+     */
     updateFavoriteButtons() {
         this.elements.favoriteButtons.forEach(btn => {
             const resourceId = btn.dataset.id;
@@ -359,6 +431,9 @@ class UIManager {
         });
     }
 
+    /**
+     * Toggles the visibility of favorite items.
+     */
     toggleFavorites() {
         if (this.elements.showFavoritesBtn) {
             this.elements.showFavoritesBtn.classList.toggle('active');
@@ -366,6 +441,9 @@ class UIManager {
         }
     }
 
+    /**
+     * Filters resources based on user input and selected category.
+     */
     filterResources() {
         if (!this.elements.searchInput || !this.elements.categoryFilter) return;
 
@@ -420,6 +498,11 @@ class UIManager {
         this.updateFilterResults(visibleSections, fragment);
     }
 
+    /**
+     * Updates the filter results based on the number of visible sections.
+     * @param {number} visibleSections - The number of visible sections.
+     * @param {DocumentFragment} fragment - The fragment containing visible items.
+     */
     updateFilterResults(visibleSections, fragment) {
         const noResults = visibleSections === 0;
         const noResultsEl = document.getElementById('noResults');
@@ -452,6 +535,10 @@ class UIManager {
             `Found ${fragment.children.length} matching resources in ${visibleSections} categories`;
     }
 
+    /**
+     * Handles clicks on resource cards to update last visited items.
+     * @param {Event} event - The click event.
+     */
     async handleResourceClick(event) {
         const card = event.target.closest('.resource-card');
         if (!card) return;
@@ -473,6 +560,11 @@ class UIManager {
         await this.state.saveLastVisited();
     }
 
+    /**
+     * Generates HTML for the last visited items.
+     * @param {Array} items - The last visited items.
+     * @returns {string} - The generated HTML.
+     */
     generateLastVisitedHTML(items) {
         return items.map(item => `
             <li>
@@ -496,6 +588,9 @@ class UIManager {
         `).join('');
     }
 
+    /**
+     * Updates the last visited section in the UI.
+     */
     updateLastVisited() {
         if (!this.elements.lastVisited || !this.elements.lastVisitedList) return;
 
@@ -516,6 +611,10 @@ class UIManager {
         }
     }
 
+    /**
+     * Handles settings updates from the background script.
+     * @param {Object} newSettings - The updated settings.
+     */
     handleSettingsUpdate(newSettings) {
         this.state.settings = newSettings;
         this.updateTheme();
@@ -523,14 +622,23 @@ class UIManager {
         this.filterResources();
     }
 
+    /**
+     * Shows the loading spinner.
+     */
     showLoading() {
         domUtils.setVisibility(this.elements.loadingSpinner, true);
     }
 
+    /**
+     * Hides the loading spinner.
+     */
     hideLoading() {
         domUtils.setVisibility(this.elements.loadingSpinner, false);
     }
 
+    /**
+     * Cleans up event listeners and observers.
+     */
     cleanup() {
         // Remove event listeners
         this.eventListeners.forEach((config, element) => {

@@ -53,6 +53,10 @@ npm test
 npm run test:coverage
 ```
 
+## CI/CD Setup
+
+- Set up CI/CD pipelines using GitHub Actions for automated testing and deployment.
+
 ## Contributing
 
 1. Fork the repository

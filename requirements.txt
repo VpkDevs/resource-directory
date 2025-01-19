@@ -1,0 +1,4 @@
+# List of dependencies for the AI Resource Directory Chrome Extension
+# Add your project dependencies here
+
+axios
