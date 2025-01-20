@@ -1,0 +1,40 @@
+=== Map project directory structure ===
+Completed: 2025-01-20
+
+Directory structure mapped using recursive file scanning:
+c:/Users/APPYness/Desktop/PROJECTS/ai-resource-directory/
+├── .eslintrc.json
+├── .gitignore
+├── .prettierrc
+├── config.js
+├── manifest.json
+├── offline.html
+├── options.html
+├── options.js
+├── OVERVIEW.md
+├── package-lock.json
+├── package.json
+├── popup.html
+├── PROJECT_OVERVIEW.md
+├── project_progress.txt
+├── README.md
+├── requirements.txt
+├── script.js
+├── serviceWorker.js
+├── styles.css
+├── toast.js
+├── TODO.md
+├── tsconfig.json
+├── types.ts
+├── utils.js
+├── vitest.config.ts
+└── __tests__/
+    ├── global.d.ts
+    ├── options.test.ts
+    ├── setup.ts
+    ├── types.ts
+    └── utils.test.ts
+└── src/
+    ├── config.ts
+    ├── types.ts
+    └── utils.ts
