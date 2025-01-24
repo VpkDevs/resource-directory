@@ -1,0 +1,11 @@
+{
+  "source": {
+    "include": ["src", "script.js", "options.js", "utils.js"],
+    "includePattern": ".+\\.js(doc|x)?$",
+    "excludePattern": "(node_modules|\\.git)"
+  },
+  "opts": {
+    "destination": "./docs",
+    "recurse": true
+  }
+}
