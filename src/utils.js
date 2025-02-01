@@ -73,9 +73,9 @@ export const stringUtils = {
     escapeHtml(unsafe) {
         return unsafe
             .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
+            .replace(/</g, "<")
+            .replace(/>/g, ">")
+            .replace(/"/g, """)
             .replace(/'/g, "&#039;");
     },
     slugify(text) {
@@ -112,19 +112,24 @@ export const dataUtils = {
 // Storage Utilities
 export const storageUtils = {
     async get(key) {
+        logger.info(`Attempting to get key: ${key}`);
         try {
             const result = await chrome.storage.local.get(key);
+            logger.info(`Successfully retrieved key: ${key}`);
             return result[key];
         }
         catch (error) {
+            logger.error(`Error getting key: ${key}`, error);
             throw new AppError(CONFIG.ERRORS.STORAGE.LOAD_FAILED, 'STORAGE_GET_ERROR', error);
         }
     },
     async set(key, value) {
+        logger.info(`Attempting to set key: ${key} with value: ${value}`);
         try {
             await chrome.storage.local.set({ [key]: value });
         }
         catch (error) {
+            logger.error(`Error setting key: ${key}`, error);
             if (error.message.includes('QUOTA_BYTES')) {
                 throw new AppError(CONFIG.ERRORS.STORAGE.QUOTA_EXCEEDED, 'STORAGE_QUOTA_ERROR', error);
             }
@@ -132,10 +137,12 @@ export const storageUtils = {
         }
     },
     async remove(key) {
+        logger.info(`Attempting to remove key: ${key}`);
         try {
             await chrome.storage.local.remove(key);
         }
         catch (error) {
+            logger.error(`Error removing key: ${key}`, error);
             throw new AppError(CONFIG.ERRORS.STORAGE.SAVE_FAILED, 'STORAGE_REMOVE_ERROR', error);
         }
     }
