@@ -1,34 +1,28 @@
 {
-    "compilerOptions": {
-        "target": "ES2020",
-        "module": "ESNext",
-        "moduleResolution": "node",
-        "strict": true,
-        "jsx": "preserve",
-        "sourceMap": true,
-        "resolveJsonModule": true,
-        "esModuleInterop": true,
-        "lib": [
-            "ESNext",
-            "DOM"
-        ],
-        "types": [
-            "vitest/globals",
-            "chrome",
-            "@types/chrome",
-            "node"
-        ],
-        "allowJs": true
-    },
-    "include": [
-        "src/**/*.ts",
-        "src/**/*.d.ts",
-        "__tests__/**/*.ts",
-        "*.config.ts"
-    ],
-    "exclude": [
-        "node_modules",
-        "dist",
-        "**/*.js"
-    ]
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "allowUnusedLabels": false,
+    "allowUnreachableCode": false,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@/types": ["src/types"],
+      "@/services": ["src/services"],
+      "@/utils": ["src/utils"]
+    }
+  }
 }

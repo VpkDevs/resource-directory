@@ -1,6 +1,8 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { OptionsManager } from '../options.js';
 import { storageUtils } from '../utils.js';
+import { CONFIG } from '../src/config.js';
+
 describe('OptionsManager', () => {
     let optionsManager;
     beforeEach(() => {

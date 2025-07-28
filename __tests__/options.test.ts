@@ -1,9 +1,10 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { OptionsManager } from '../options.js';
 import { storageUtils } from '../utils.js';
+import { CONFIG } from '../src/config.js';
 
 describe('OptionsManager', () => {
-    let optionsManager;
+    let optionsManager: OptionsManager;
 
     beforeEach(() => {
         document.body.innerHTML = `
@@ -23,8 +24,8 @@ describe('OptionsManager', () => {
     });
 
     it('should save settings correctly', async () => {
-        optionsManager.elements.darkMode.checked = true;
-        optionsManager.elements.maxLastVisited.value = '10';
+        (optionsManager.elements.darkMode as HTMLInputElement).checked = true;
+        (optionsManager.elements.maxLastVisited as HTMLInputElement).value = '10';
         await optionsManager.saveSettings();
         expect(await storageUtils.get('settings')).toEqual({
             darkMode: true,
@@ -37,7 +38,7 @@ describe('OptionsManager', () => {
     });
 
     it('should reset settings to defaults', async () => {
-        optionsManager.elements.darkMode.checked = true;
+        (optionsManager.elements.darkMode as HTMLInputElement).checked = true;
         await optionsManager.saveSettings();
         await optionsManager.resetSettings();
         expect(await storageUtils.get('settings')).toEqual(optionsManager.defaultSettings);
@@ -61,7 +62,7 @@ describe('OptionsManager', () => {
         Object.defineProperty(input, 'files', {
             value: [file]
         });
-        await optionsManager.importData(input);
+        await optionsManager.importData();
         expect(await storageUtils.get('settings')).toEqual(mockData.settings);
     });
 

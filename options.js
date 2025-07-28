@@ -33,7 +33,7 @@ class OptionsManager {
             darkMode: false,
             reducedMotion: false,
             defaultCategory: 'all',
-            maxLastVisited: CONFIG.UI.MAX_LAST_VISITED,
+            maxLastVisited: CONFIG.UI.MAX_RECENT_ITEMS,
             offlineAccess: true,
             enableNotifications: true
         };
@@ -297,3 +297,5 @@ document.addEventListener('DOMContentLoaded', () => {
     const optionsManager = new OptionsManager();
     optionsManager.initialize();
 });
+
+export { OptionsManager };
