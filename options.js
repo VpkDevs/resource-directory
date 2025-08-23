@@ -33,7 +33,7 @@ class OptionsManager {
             darkMode: false,
             reducedMotion: false,
             defaultCategory: 'all',
-            maxLastVisited: CONFIG.UI.MAX_RECENT_ITEMS,
+            maxLastVisited: CONFIG.UI_CONFIG?.MAX_RECENT_ITEMS || 10,
             offlineAccess: true,
             enableNotifications: true
         };

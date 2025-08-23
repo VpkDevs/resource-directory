@@ -191,7 +191,7 @@ class UIManager {
         // Create debounced filter function
         this.debouncedFilter = performanceUtils.debounce(
             () => this.filterResources(),
-            CONFIG.UI.SEARCH_DEBOUNCE_TIME
+            CONFIG.SEARCH_CONFIG?.SEARCH_DEBOUNCE_MS || 300
         );
 
         // Store event listeners for cleanup
