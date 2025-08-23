@@ -1,39 +1,39 @@
 /**
  * Toast Notification System (toast.ts)
- * 
+ *
  * This file implements a toast notification system for the AI Resource Directory
  * Chrome extension. It provides a non-intrusive way to display temporary messages,
  * alerts, and feedback to users.
  */
 
-import { ToastOptions } from './types';
+import { ToastOptions } from './types'
 
 // Toast Notification System
 class ToastManager {
-  private container: HTMLDivElement | null;
+  private container: HTMLDivElement | null
 
   constructor() {
-    this.container = null;
+    this.container = null
     // We need to check if we're in a browser environment before initializing
     if (typeof document !== 'undefined') {
-      this.initializeContainer();
+      this.initializeContainer()
     }
   }
 
   private initializeContainer(): void {
-    this.container = document.createElement('div');
-    this.container.id = 'toast-container';
-    this.container.setAttribute('role', 'alert');
-    this.container.setAttribute('aria-live', 'polite');
-    
+    this.container = document.createElement('div')
+    this.container.id = 'toast-container'
+    this.container.setAttribute('role', 'alert')
+    this.container.setAttribute('aria-live', 'polite')
+
     // Ensure the document.body exists before appending
     if (document.body) {
-      document.body.appendChild(this.container);
+      document.body.appendChild(this.container)
     } else {
       // If document.body doesn't exist yet, wait for DOM to be ready
       document.addEventListener('DOMContentLoaded', () => {
-        document.body.appendChild(this.container!);
-      });
+        document.body.appendChild(this.container!)
+      })
     }
   }
 
@@ -44,82 +44,77 @@ class ToastManager {
    */
   show(message: string, options: ToastOptions = {}): HTMLDivElement {
     if (!this.container) {
-      this.initializeContainer();
+      this.initializeContainer()
     }
 
-    const { 
-      type = 'info', 
-      duration = 3000, 
-      action, 
-      onClose 
-    } = options;
+    const { type = 'info', duration = 3000, action, onClose } = options
 
-    const toast = document.createElement('div');
-    toast.className = `toast toast-${type}`;
-    toast.setAttribute('role', 'status');
-    
-    const icon = this.getIconForType(type);
-    
+    const toast = document.createElement('div')
+    toast.className = `toast toast-${type}`
+    toast.setAttribute('role', 'status')
+
+    const icon = this.getIconForType(type)
+
     let content = `
       <div class="toast-content">
         <span class="toast-icon">${icon}</span>
         <span class="toast-message">${message}</span>
       </div>
-    `;
+    `
 
     // Add action button if provided
     if (action) {
       content += `
         <button class="toast-action" aria-label="${action.text}">${action.text}</button>
-      `;
+      `
     }
 
-    content += `<button class="toast-close" aria-label="Close notification">×</button>`;
-    
-    toast.innerHTML = content;
-    this.container!.appendChild(toast);
+    content += `<button class="toast-close" aria-label="Close notification">×</button>`
+
+    toast.innerHTML = content
+    this.container!.appendChild(toast)
 
     // Add action button functionality
     if (action) {
-      const actionBtn = toast.querySelector('.toast-action');
+      const actionBtn = toast.querySelector('.toast-action')
       if (actionBtn) {
         actionBtn.addEventListener('click', () => {
-          action.handler();
-          this.dismiss(toast);
-        });
+          action.handler()
+          this.dismiss(toast)
+        })
       }
     }
 
     // Add close button functionality
-    const closeBtn = toast.querySelector('.toast-close');
+    const closeBtn = toast.querySelector('.toast-close')
     if (closeBtn) {
       closeBtn.addEventListener('click', () => {
-        this.dismiss(toast);
-        if (onClose) onClose();
-      });
+        this.dismiss(toast)
+        if (onClose) onClose()
+      })
     }
 
     // Animate in
     requestAnimationFrame(() => {
-      toast.classList.add('show');
-    });
+      toast.classList.add('show')
+    })
 
     // Auto dismiss
     if (duration > 0) {
       setTimeout(() => {
-        this.dismiss(toast);
-        if (onClose) onClose();
-      }, duration);
+        this.dismiss(toast)
+        if (onClose) onClose()
+      }, duration)
     }
 
     // Accessibility: Remove after animation
-    toast.addEventListener('animationend', (e) => {
+    toast.addEventListener('animationend', e => {
       if ((e as AnimationEvent).animationName === 'toast-fade-out') {
-        toast.remove();
+        toast.remove()
       }
-    });
+    })
 
-    return toast;
+    return toast
   }
 
   /**
@@ -127,8 +122,8 @@ class ToastManager {
    * @param toast The toast element to dismiss
    */
   dismiss(toast: HTMLDivElement): void {
-    toast.classList.remove('show');
-    toast.classList.add('hiding');
+    toast.classList.remove('show')
+    toast.classList.add('hiding')
   }
 
   /**
@@ -141,9 +136,9 @@ class ToastManager {
       success: '✓',
       error: '✕',
       warning: '⚠',
-      info: 'ℹ'
-    };
-    return icons[type] || icons.info;
+      info: 'ℹ',
+    }
+    return icons[type] || icons.info
   }
 
   /**
@@ -153,7 +148,7 @@ class ToastManager {
    * @returns The toast element
    */
   success(message: string, options?: Omit<ToastOptions, 'type'>): HTMLDivElement {
-    return this.show(message, { ...options, type: 'success' });
+    return this.show(message, { ...options, type: 'success' })
   }
 
   /**
@@ -163,7 +158,7 @@ class ToastManager {
    * @returns The toast element
    */
   error(message: string, options?: Omit<ToastOptions, 'type'>): HTMLDivElement {
-    return this.show(message, { ...options, type: 'error' });
+    return this.show(message, { ...options, type: 'error' })
   }
 
   /**
@@ -173,7 +168,7 @@ class ToastManager {
    * @returns The toast element
    */
   warning(message: string, options?: Omit<ToastOptions, 'type'>): HTMLDivElement {
-    return this.show(message, { ...options, type: 'warning' });
+    return this.show(message, { ...options, type: 'warning' })
   }
 
   /**
@@ -183,7 +178,7 @@ class ToastManager {
    * @returns The toast element
    */
   info(message: string, options?: Omit<ToastOptions, 'type'>): HTMLDivElement {
-    return this.show(message, { ...options, type: 'info' });
+    return this.show(message, { ...options, type: 'info' })
   }
 
   /**
@@ -191,13 +186,13 @@ class ToastManager {
    */
   clearAll(): void {
     if (this.container) {
-      const toasts = this.container.querySelectorAll('.toast');
+      const toasts = this.container.querySelectorAll('.toast')
       toasts.forEach(toast => {
-        this.dismiss(toast as HTMLDivElement);
-      });
+        this.dismiss(toast as HTMLDivElement)
+      })
     }
   }
 }
 
 // Export a singleton instance of ToastManager
-export const toastManager = new ToastManager();
+export const toastManager = new ToastManager()

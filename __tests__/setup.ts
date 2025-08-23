@@ -11,9 +11,9 @@ const mockChrome = {
     local: {
       get: getMock,
       set: setMock,
-      remove: removeMock
-    }
-  }
+      remove: removeMock,
+    },
+  },
 }
 
 // Make chrome available globally

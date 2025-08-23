@@ -20,10 +20,7 @@
     "*://*.anthropic.com/*",
     "*://*.huggingface.co/*"
   ],
-  "optional_permissions": [
-    "identity",
-    "downloads"
-  ],
+  "optional_permissions": ["identity", "downloads"],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
@@ -80,15 +77,12 @@
     "service_worker": "serviceWorker.js",
     "type": "module"
   },
-  "web_accessible_resources": [{
-    "resources": [
-      "images/*",
-      "offline.html",
-      "*.js",
-      "*.css"
-    ],
-    "matches": ["<all_urls>"]
-  }],
+  "web_accessible_resources": [
+    {
+      "resources": ["images/*", "offline.html", "*.js", "*.css"],
+      "matches": ["<all_urls>"]
+    }
+  ],
   "author": "AI Resource Directory Team",
   "homepage_url": "https://github.com/yourusername/ai-resource-directory",
   "minimum_chrome_version": "88",
