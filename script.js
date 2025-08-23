@@ -1,7 +1,7 @@
 import { CONFIG } from './config.js';
 import { storageUtils, performanceUtils, domUtils, stringUtils } from './utils.js';
 import { toastManager } from './toast.js';
-import { AppState, Resource, LastVisitedItem } from './types.ts';
+import { SAMPLE_RESOURCES } from './sample-data.js';
 
 /**
  * StateManager class manages the application state, including favorites,
@@ -14,6 +14,7 @@ class StateManager {
         this.lastVisitedItems = []; // Stores last visited items
         this.isLoading = true; // Indicates if the application is loading
         this.settings = null; // Stores user settings
+        this.resources = []; // Stores available resources
         this._observers = new Set(); // Observers for state changes
     }
 
@@ -52,25 +53,29 @@ class StateManager {
      */
     async initialize() {
         try {
-            // Load settings first as they affect other initializations
-            this.settings = await storageUtils.get('settings') || CONFIG.DEFAULTS;
+            // Load settings first as they affect other initializations  
+            this.settings = await storageUtils.get('settings') || CONFIG.DEFAULT_USER_PREFERENCES;
             
             // Load other data in parallel
             const [favorites, darkMode, lastVisited] = await Promise.all([
-                storageUtils.get(CONFIG.STORAGE_KEYS.FAVORITES),
-                storageUtils.get(CONFIG.STORAGE_KEYS.DARK_MODE),
-                storageUtils.get(CONFIG.STORAGE_KEYS.LAST_VISITED)
+                storageUtils.get(CONFIG.CACHE_KEYS?.FAVORITES || 'favorites'),
+                storageUtils.get('darkMode'),
+                storageUtils.get('lastVisited')
             ]);
 
             this.favorites = new Set(favorites || []);
             this.darkMode = darkMode ?? this.settings.darkMode;
             this.lastVisitedItems = lastVisited || [];
             this.isLoading = false;
+            
+            // Load sample resources for MVP
+            this.resources = SAMPLE_RESOURCES;
 
             this.notifyObservers('initialized', { 
                 favorites: this.favorites,
                 darkMode: this.darkMode,
-                lastVisited: this.lastVisitedItems
+                lastVisited: this.lastVisitedItems,
+                resources: this.resources
             });
 
             return true;
