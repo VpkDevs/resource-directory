@@ -38,3 +38,11 @@
 {"level":"info","message":"Attempting to get key: testKey","timestamp":"2025-08-23T10:02:22.358Z"}
 {"level":"info","message":"Successfully retrieved key: testKey","timestamp":"2025-08-23T10:02:22.358Z"}
 {"level":"info","message":"Attempting to remove key: testKey","timestamp":"2025-08-23T10:02:22.359Z"}
+{"level":"info","message":"Attempting to set key: testKey with value: [object Object]","timestamp":"2025-08-23T10:06:40.775Z"}
+{"level":"info","message":"Attempting to get key: testKey","timestamp":"2025-08-23T10:06:40.779Z"}
+{"level":"info","message":"Successfully retrieved key: testKey","timestamp":"2025-08-23T10:06:40.779Z"}
+{"level":"info","message":"Attempting to remove key: testKey","timestamp":"2025-08-23T10:06:40.779Z"}
+{"level":"info","message":"Attempting to set key: testKey with value: [object Object]","timestamp":"2025-08-23T10:06:41.642Z"}
+{"level":"info","message":"Attempting to get key: testKey","timestamp":"2025-08-23T10:06:41.646Z"}
+{"level":"info","message":"Successfully retrieved key: testKey","timestamp":"2025-08-23T10:06:41.646Z"}
+{"level":"info","message":"Attempting to remove key: testKey","timestamp":"2025-08-23T10:06:41.646Z"}

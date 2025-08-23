@@ -337,7 +337,7 @@ class UIManager {
      * @param {string} event - The event type.
      * @param {Object} data - The data associated with the event.
      */
-    onStateChange(event, data) {
+    onStateChange(event, _data) {
         switch (event) {
             case 'initialized':
                 this.updateTheme();
