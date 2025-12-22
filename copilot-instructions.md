@@ -10,7 +10,7 @@ This is a Chrome extension that provides a comprehensive directory of AI resourc
 - Vitest for testing
 - ESLint + Prettier for code quality
 - Winston for logging
-- Vite for building
+- Vite for development and building
 
 ## Architecture
 
@@ -122,7 +122,7 @@ describe('ComponentName', () => {
 
 ### Coverage
 - Run tests with coverage: `npm run test:coverage`
-- Excluded from coverage: `node_modules/`, `dist/`, test files, config files
+- Excluded from coverage: `node_modules/`, `dist/`, `**/*.test.ts`, `**/*.config.ts`
 
 ## Build & Development
 
