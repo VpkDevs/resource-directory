@@ -26,7 +26,7 @@ describe('Utils', () => {
 
     it('should check if timestamp is expired', () => {
       const now = Date.now()
-      const hourAgo = now - (60 * 60 * 1000)
+      const hourAgo = now - 60 * 60 * 1000
       expect(dateUtils.isExpired(hourAgo, 30 * 60 * 1000)).toBe(true) // 30 minutes
       expect(dateUtils.isExpired(now, 30 * 60 * 1000)).toBe(false)
     })
@@ -37,16 +37,20 @@ describe('Utils', () => {
       const element = document.createElement('div')
       domUtils.setVisibility(element, false)
       expect(element.style.display).toBe('none')
-      
+
       domUtils.setVisibility(element, true)
       expect(element.style.display).toBe('')
     })
 
     it('should create element with attributes and children', () => {
-      const element = domUtils.createElement('div', {
-        className: 'test-class',
-        dataset: { testId: 'test-123' }
-      }, ['Child text'])
+      const element = domUtils.createElement(
+        'div',
+        {
+          className: 'test-class',
+          dataset: { testId: 'test-123' },
+        },
+        ['Child text']
+      )
 
       expect(element.tagName).toBe('DIV')
       expect(element.className).toBe('test-class')
@@ -66,7 +70,7 @@ describe('Utils', () => {
       debouncedIncrement()
 
       expect(counter).toBe(0)
-      
+
       await new Promise(resolve => setTimeout(resolve, 150))
       expect(counter).toBe(1)
     })
@@ -95,7 +99,7 @@ describe('Utils', () => {
     it('should set items in storage', async () => {
       const key = 'testKey'
       const value = { test: 'data' }
-      
+
       await storageUtils.set(key, value)
       expect(chromeMock.storage.local.set).toHaveBeenCalledWith({ [key]: value })
     })

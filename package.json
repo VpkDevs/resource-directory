@@ -1,33 +1,33 @@
 {
-    "name":  "resourcehub-ai",
-    "version":  "1.2.0",
-    "description":  "A comprehensive directory of AI resource platforms and interactive AI models",
-    "scripts":  {
-                    "test":  "vitest run",
-                    "test:watch":  "vitest",
-                    "test:coverage":  "vitest run --coverage",
-                    "dev":  "vite",
-                    "build":  "vite build",
-                    "lint":  "eslint .",
-                    "format":  "prettier --write ."
-                },
-    "dependencies":  {
-                         "axios":  "^1.6.2",
-                         "winston":  "^3.17.0"
-                     },
-    "devDependencies":  {
-                            "@types/chrome":  "^0.0.253",
-                            "@types/node":  "^20.10.0",
-                            "@typescript-eslint/eslint-plugin":  "^6.12.0",
-                            "@typescript-eslint/parser":  "^6.12.0",
-                            "@vitest/coverage-v8":  "^0.34.6",
-                            "eslint":  "^8.54.0",
-                            "jsdoc":  "^4.0.4",
-                            "jsdom":  "^23.2.0",
-                            "prettier":  "^3.1.0",
-                            "snyk":  "^1.1295.0",
-                            "typescript":  "^5.3.2",
-                            "vite":  "^5.0.0",
-                            "vitest":  "^0.34.6"
-                        }
+  "name": "resourcehub-ai",
+  "version": "1.2.0",
+  "description": "A comprehensive directory of AI resource platforms and interactive AI models",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "axios": "^1.6.2",
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.253",
+    "@types/node": "^20.10.0",
+    "@typescript-eslint/eslint-plugin": "^6.12.0",
+    "@typescript-eslint/parser": "^6.12.0",
+    "@vitest/coverage-v8": "^0.34.6",
+    "eslint": "^8.54.0",
+    "jsdoc": "^4.0.4",
+    "jsdom": "^23.2.0",
+    "prettier": "^3.1.0",
+    "snyk": "^1.1295.0",
+    "typescript": "^5.3.2",
+    "vite": "^5.0.0",
+    "vitest": "^0.34.6"
+  }
 }
