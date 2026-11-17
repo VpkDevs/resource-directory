@@ -1,6 +1,5 @@
 import { CONFIG } from './config.js';
-import { storageUtils, domUtils } from './utils.js';
-import { toastManager } from './toast.js';
+import { storageUtils } from './utils.js';
 
 class OptionsManager {
     constructor() {
@@ -33,7 +32,7 @@ class OptionsManager {
             darkMode: false,
             reducedMotion: false,
             defaultCategory: 'all',
-            maxLastVisited: CONFIG.UI.MAX_RECENT_ITEMS,
+            maxLastVisited: CONFIG.UI_CONFIG?.MAX_RECENT_ITEMS || 10,
             offlineAccess: true,
             enableNotifications: true
         };
@@ -104,7 +103,7 @@ class OptionsManager {
     async updateStatistics() {
         try {
             // Get favorites count
-            const favorites = await storageUtils.get(CONFIG.STORAGE_KEYS.FAVORITES) || [];
+            const favorites = await storageUtils.get(CONFIG.CACHE_KEYS?.FAVORITES || 'favorites') || [];
             this.elements.favoritesCount.textContent = favorites.length;
 
             // Calculate storage usage

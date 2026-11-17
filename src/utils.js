@@ -7,6 +7,7 @@
  */
 import { CONFIG } from './config';
 import { AppError } from './types';
+import logger from './logger.js';
 // Time and Date Utilities
 export const dateUtils = {
     formatTimestamp(timestamp) {
@@ -73,9 +74,9 @@ export const stringUtils = {
     escapeHtml(unsafe) {
         return unsafe
             .replace(/&/g, "&amp;")
-            .replace(/</g, "<")
-            .replace(/>/g, ">")
-            .replace(/"/g, """)
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
             .replace(/'/g, "&#039;");
     },
     slugify(text) {

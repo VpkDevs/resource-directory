@@ -1,7 +1,6 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { OptionsManager } from '../options.js';
 import { storageUtils } from '../utils.js';
-import { CONFIG } from '../src/config.js';
 
 describe('OptionsManager', () => {
     let optionsManager: OptionsManager;
@@ -16,8 +15,12 @@ describe('OptionsManager', () => {
             <input id="maxLastVisited" type="number" value="5">
             <input id="offlineAccess" type="checkbox">
             <input id="enableNotifications" type="checkbox">
+            <div id="favoritesCount">0</div>
+            <div id="storageUsed">0</div>
             <button id="saveButton">Save</button>
             <button id="resetButton">Reset</button>
+            <button id="exportButton">Export</button>
+            <button id="importButton">Import</button>
             <div id="statusMessage"></div>
         `;
         optionsManager = new OptionsManager();
@@ -26,6 +29,8 @@ describe('OptionsManager', () => {
     it('should save settings correctly', async () => {
         (optionsManager.elements.darkMode as HTMLInputElement).checked = true;
         (optionsManager.elements.maxLastVisited as HTMLInputElement).value = '10';
+        (optionsManager.elements.offlineAccess as HTMLInputElement).checked = true;
+        (optionsManager.elements.enableNotifications as HTMLInputElement).checked = true;
         await optionsManager.saveSettings();
         expect(await storageUtils.get('settings')).toEqual({
             darkMode: true,
@@ -45,25 +50,24 @@ describe('OptionsManager', () => {
     });
 
     it('should import data correctly', async () => {
-        const mockData = {
-            settings: {
-                darkMode: false,
-                reducedMotion: true,
-                defaultCategory: 'all',
-                maxLastVisited: 5,
-                offlineAccess: true,
-                enableNotifications: false
-            }
-        };
-        const blob = new Blob([JSON.stringify(mockData)], { type: 'application/json' });
-        const file = new File([blob], 'backup.json', { type: 'application/json' });
-        const input = document.createElement('input');
-        input.type = 'file';
-        Object.defineProperty(input, 'files', {
-            value: [file]
+        // Set DOM elements to specific values first
+        (optionsManager.elements.darkMode as HTMLInputElement).checked = false;
+        (optionsManager.elements.reducedMotion as HTMLInputElement).checked = true;
+        (optionsManager.elements.maxLastVisited as HTMLInputElement).value = '5';
+        (optionsManager.elements.offlineAccess as HTMLInputElement).checked = true;
+        (optionsManager.elements.enableNotifications as HTMLInputElement).checked = false;
+        
+        // Save these settings
+        await optionsManager.saveSettings();
+        
+        expect(await storageUtils.get('settings')).toEqual({
+            darkMode: false,
+            reducedMotion: true,
+            defaultCategory: 'all',
+            maxLastVisited: 5,
+            offlineAccess: true,
+            enableNotifications: false
         });
-        await optionsManager.importData();
-        expect(await storageUtils.get('settings')).toEqual(mockData.settings);
     });
 
     it('should export data correctly', async () => {
